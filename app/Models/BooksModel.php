@@ -8,6 +8,7 @@ class BooksModel extends Model
 {
   protected $table      = 'books';
   protected $useTimestamps = true;
+  protected $allowedFields = ['judul', 'slug', 'penulis', 'penerbit', 'sampul']; // id, created at and updated at otomatis
 
   public function getBook($slug = false)
   {

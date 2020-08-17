@@ -35,6 +35,12 @@ class Books extends BaseController
       'books' => $this->booksModel->getBook($slug) //kalau yang ini butuh parameter buat nampilin detaill
     ];
 
+    // jika buku tidak ada di tabel
+    if (empty($data['books'])) {
+      // buat nampilin page 404 - Not Found
+      throw new \CodeIgniter\Exceptions\PageNotFoundException('Judul Komik ' . $slug . ' tidak ditemukan');
+    }
+
     return view('books/detail', $data);
   }
 
@@ -49,7 +55,26 @@ class Books extends BaseController
     return view('books/create', $data);
   }
 
-  public function save(){
-    $this->request->getVar() //buat dapetin semua mau pos ataupun get
+
+  // Menegelola data dari create untuk ditambahkan ke tabel
+  public function save()
+  {
+    //dd($this->request->getVar()); //buat dapetin semua mau pos ataupun get
+
+    // tampung slug sebagai judul
+    $slug = url_title($this->request->getVar('judul'), '-', true);
+
+    $this->booksModel->save([
+      'judul' => $this->request->getVar('judul'),
+      'slug' => $slug,
+      'penulis' => $this->request->getVar('penulis'),
+      'penerbit' => $this->request->getVar('penerbit'),
+      'sampul' => $this->request->getVar('sampul')
+    ]);
+
+    // flash message jika data berhasil ditampilkan
+    session()->setFlashData('pesan', 'Data berhasil ditambahkan!');
+
+    return redirect()->to('/books');
   }
 }

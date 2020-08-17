@@ -10,8 +10,8 @@
       <h2 class="my-2">Tambah Data Buku</h2>
 
       <form action="/books/save" method="post">
-        <!-- biar formnya aman -->
-        <?= $csrf_field(); ?>
+        <!-- biar formnya aman, dan jalan di page ini aja -->
+        <?= csrf_field(); ?>
 
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Judul</label>

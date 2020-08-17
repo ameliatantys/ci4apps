@@ -7,8 +7,13 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <a href="/books/create" class="btn btn-primary mt-3">Tambah Data Buku</a>
       <h1 class="mt-2">Daftar Buku</h1>
-      <a href="/books/create" class="btn btn-primary my-3">Tambah Data Buku</a>
+      <?php if (session()->getFlashData('pesan')) : ?>
+        <div class="alert alert-success text-center" role="alert">
+          <?= session()->getFlashData('pesan'); ?>
+        </div>
+      <?php endif; ?>
       <table class="table">
         <thead>
           <tr>
