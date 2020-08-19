@@ -33,7 +33,11 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
 $routes->get('books/create', 'Books::create');
-$routes->get('/books/(:segment)', 'Books::detail/$1');
+//buat edit
+$routes->get('/books/edit/(:segment)', 'Books::edit/$1');
+// buat ngedelete
+$routes->delete('books/(:num)', 'Books::delete/$1');
+$routes->get('/books/(:any)', 'Books::detail/$1');
 // $routes->get('/coba/index', 'Coba::index');
 // $routes->get('/coba/about', 'Coba::about');
 // $routes->get('/coba/(:any)/(:num)', 'Coba::about/$1/$2'); // buat ngakses langsung ke id
