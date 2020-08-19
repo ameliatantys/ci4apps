@@ -47,9 +47,11 @@ class Books extends BaseController
   // Menambahkan data baru
   public function create()
   {
+    // session(); // fungsi penyimpanan disimpan di base controller
     $data = [
       'title' => 'Form Tambah Buku',
-      'books' => $this->booksModel->getBook() //kalau yang ini butuh parameter buat nampilin detaill
+      // mengirim validation ke create
+      'validation' => \Config\Services::validation()
     ];
 
     return view('books/create', $data);
@@ -60,6 +62,47 @@ class Books extends BaseController
   public function save()
   {
     //dd($this->request->getVar()); //buat dapetin semua mau pos ataupun get
+
+    // validasi input
+    // if (!$this->validate([
+    //   'judul' => 'required|is_unique[books.judul]',
+    //   'penulis' => 'required',
+    //   'penerbit' => 'required',
+    //   'sampul' => 'required'
+    // ])) {
+
+    if (!$this->validate([
+      'judul' => [
+        'rules' => 'required|is_unique[books.judul]',
+        'errors' => [
+          'required' => '{field} buku harus diisi',
+          'is_unique' => '{field} buku sudah terdaftar'
+        ]
+      ],
+      'penulis' => [
+        'rules' => 'required',
+        'errors' => [
+          'required' => '{field} buku harus diisi'
+        ]
+      ],
+      'penerbit' => [
+        'rules' => 'required',
+        'errors' => [
+          'required' => '{field} buku harus diisi'
+        ]
+      ],
+      'sampul' => [
+        'rules' => 'required',
+        'errors' => [
+          'required' => '{field} buku harus diisi'
+        ]
+      ]
+    ])) {
+      // mengambil pesan kesalahan
+      $validation = \Config\Services::validation();
+      // input ini akan di simpan ke session
+      return redirect()->to('/books/create')->withInput()->with('validation', $validation);
+    }
 
     // tampung slug sebagai judul
     $slug = url_title($this->request->getVar('judul'), '-', true);

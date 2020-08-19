@@ -9,7 +9,7 @@
         <a class="nav-item nav-link active" href="/pages/">Home <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="/pages/about">About</a>
         <a class="nav-item nav-link" href="/pages/contact">Contact</a>
-        <a class="nav-item nav-link" href="/books/index">Books</a>
+        <a class="nav-item nav-link" href="/books/">Books</a>
       </div>
     </div>
 </nav>
